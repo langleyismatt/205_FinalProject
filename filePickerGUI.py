@@ -5,6 +5,7 @@ import sys
 
 title = "Image to 8-bit sprite converter!"
 image = "welcome.png"
+image1 = "sprite1.png"
 
 var = ccbox ( "Welcome to our image to 8-bit sprite converter by Matthew Langley"
               ", Coleman Johnston, and Kailey Sarmiento!  Instructions are very simple"
@@ -19,6 +20,5 @@ if var == 1:
 elif var == 0:
     msgbox ( msg = "Maybe next time!", title = title )
     sys.exit(0)
-
 
 print (path)
