@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import *
 import sys
 
-title = "Image to 8-Bit Sprite Converter!"
+title = "Image to 8-bit sprite converter!"
 image = "welcome.png"
 
 var = ccbox ( "Welcome to our image to 8-bit sprite converter by Matthew Langley"
