@@ -2,27 +2,27 @@ import sys, pygame, time
 pygame.init()
 
 FPS = 30
-fpsClock = pygame.time.Clock()
+fpsClock = pygame.time.Clock() ##check to see what this does...
 
+##Initial setup
 size = width, height = 1000, 500
 black = 0, 0, 0
 
 screen = pygame.display.set_mode(size)
-##DISPLAYSURF = pygame.display.set_mode((width,height,0,32)
 
-ball = pygame.image.load("ball.gif")
+##object ball creation
+ball = pygame.image.load("8bitbod.jpg")
 ballx = 200
 bally = 130
-##ballrect = ball.get_rect()
 
+##while the program is running... 
 while True:
 
-    ##DISPLAYSURF.blit(ball,(ballx,bally))
-    
+##Checking for errors before running program
     for event in pygame.event.get():
         if event.type == pygame.QUIT: sys.exit()
 
-    ##key_pressed = pygame.key.get_pressed()
+##Moving the ball around the screen
 
     if pygame.key.get_pressed()[pygame.K_LEFT] != 0:
         ballx -= 5
@@ -35,16 +35,9 @@ while True:
 
     if pygame.key.get_pressed()[pygame.K_DOWN]!= 0:
         bally += 5
-        
 
-    ##ballrect = ballrect.move(speed)
-    ##if ballrect.left < 0 or ballrect.right > width:
-    ##    speed[0] = -speed[0]
-    ##if ballrect.top < 0 or ballrect.bottom > height:
-    ##    speed[1] = -speed[1]
-
-    screen.fill(black)
-    screen.blit(ball,(ballx,bally)) ##removed , ballrect
+    screen.fill(black) ##backgroundcolor
+    screen.blit(ball,(ballx,bally)) ##updating the screen as the ball moves
     pygame.display.update()
     fpsClock.tick(FPS)
 
