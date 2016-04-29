@@ -1,3 +1,0 @@
-test to make sure GIT is working for everyone
-
-adding text :P
