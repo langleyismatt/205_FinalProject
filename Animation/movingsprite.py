@@ -1,3 +1,15 @@
+###########
+##CREDITS##
+###########
+
+##CST 205
+##FINAL PROJECT
+##TEAM: 102
+
+##MATTHEW LANGLEY - GUI & TKINTER DIRECTOR
+##COLEMAN JOHNSTON - OPEN CV DIRECTOR
+##KAILEY SARMIENTO - PYGAME DIRECTOR
+
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################
 
@@ -17,8 +29,17 @@ fpsClock = pygame.time.Clock()
 
 ##Initial window set up
 size = width, height = 1000, 500
-black = 0, 0, 0
 screen = pygame.display.set_mode(size)
+
+##Background set up
+color = 0,0,0
+pick = 10
+if (pick == 10):
+    background = pygame.image.load("windows.jpg")
+    background = pygame.transform.scale(background, (size))
+    background = background.convert()
+elif (pick == 20):
+    background = color
 
 ##########################################################################################################################################################################
 ##########################################################################################################################################################################
@@ -30,21 +51,21 @@ screen = pygame.display.set_mode(size)
 ##Standing
 standing = pygame.image.load("Standing.png")
 w,h = standing.get_size()
-wnew = int(w*.6)
-hnew = int(h*.6)
-standing = pygame.transform.scale(standing, (wnew, hnew))
+wnew = int(w*.6) ##Scaling images so that the sprite will remain the same size
+hnew = int(h*.6) ##Scaling images so that the sprite will remain the same size
+standing = pygame.transform.scale(standing, (wnew, hnew)) ##Scaling images so that the sprite will remain the same size
 
 ##Down
 down = pygame.image.load("Down.png")
-down = pygame.transform.scale(down, (wnew, hnew))
+down = pygame.transform.scale(down, (wnew, hnew)) ##Scaling images so that the sprite will remain the same size
 
 ##Jump
 jump = pygame.image.load("JumpUp.png")
-jump = pygame.transform.scale(jump, (wnew,hnew))
+jump = pygame.transform.scale(jump, (wnew,hnew)) ##Scaling images so that the sprite will remain the same size
 
 ##Poke
 poke = pygame.image.load("poke.png")
-poke = pygame.transform.scale(poke, (wnew,hnew))
+poke = pygame.transform.scale(poke, (wnew,hnew)) ##Scaling images so that the sprite will remain the same size
 
 ##Sprite image that will appear first
 spritemain = down
@@ -194,8 +215,11 @@ while True:
     ##UPDATINGT THE SCREEN##
     ########################
 
-    ##Background color    
-    screen.fill(black)
+    ##Background (color or image)
+    if (pick == 20):
+        screen.fill(background)
+    elif (pick == 10):
+        screen.blit(background, (0,0))
 
     ##Updating the sprite image
     screen.blit(spritemain, (plycoorx, plycoory))
