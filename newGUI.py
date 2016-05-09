@@ -16,12 +16,12 @@ def creditss():
    text = canvas.create_text(300,100, text='', font = ("Helvetica", 32))
 
    string=("Thank you for giving our project a try!"
-            "  This project was made by the brilliant minds of Coleman Johnston, "
+            "  This project was made by the minds of Coleman Johnston, "
             "Kailey Sarmiento, and Matthew Langley.  The intent of this program is "
             "to demonstrate some of the various libraries we have learned about in "
-            "to Spring 2016 semester of CST 205.")
+            "the Spring 2016 semester of CST 205.")
 
-   delta=150
+   delta=110
    delay=0
 
    for i in range(len(string) + 1):
@@ -62,8 +62,6 @@ def filePicker():
    d = Button (root, text="Select Background Image", bg="lightblue",
                command=bgImagePicker, activebackground="#B4EEB4")
    d.place(relx=.39, rely=.32, anchor=CENTER)
-   
-   mainloop()
 
 def controls():
    root = Tk()
