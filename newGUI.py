@@ -1,6 +1,6 @@
-from tkinter import *
-from tkinter.filedialog import askopenfilename
-from tkinter.colorchooser import *
+from Tkinter import *
+from tkFileDialog import *
+from tkColorChooser import *
 
 def close(root):
    root.destroy()
