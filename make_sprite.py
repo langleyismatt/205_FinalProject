@@ -2,11 +2,59 @@
 #requires OpenCV, Numpy, and Pillow to run.
 #Still needs improvment on to fix resizing and cropping issues.
 #Works best with an image taken with a webcam at typing distance. 
+#this file is a mess right now
 import cv2
 import numpy as np
 from PIL import Image
 
-def makeFace(file):#main function
+def makeSprite(faceFile, spriteFile, newSpriteFile):
+	headless = Image.open(spriteFile)#file with the sprite that does not have a face yet.
+	
+	#find red square
+	xIndex = 0
+	yIndex = 0
+	for y in range(headless.height):
+		if(yIndex > 0):
+			break
+		for x in range(headless.width):
+			if(xIndex > 0):
+				break
+
+			pixel = headless.getpixel((x,y))
+
+			if(pixel[0] > 150 and pixel[1] < 80 and pixel[2] < 80):
+				xIndex = x 
+
+				while(pixel[0] > 150 and pixel[1] < 80 and pixel[2] < 80):
+					x = x + 1
+					pixel = headless.getpixel((x,y))
+
+				x = x - 1#go back to to red square
+				w = x - xIndex#calculate width 
+
+				pixel = headless.getpixel((x,y))
+				yIndex = y
+				while(pixel[0] > 150 and pixel[1] < 80 and pixel[2] < 80):
+					y = y + 1
+					pixel = headless.getpixel((x,y))
+
+				y = y - 1#go back to red square
+				h = y - yIndex
+
+	faceOnlyFile = makeFace(faceFile)
+
+	eightBitFace =  make8bit(faceOnlyFile,(w + 3,h + 2))
+
+	#face = face.resize((w + 3,h + 2))
+
+	eightBitFace = eightBitFace.convert("RGB") 
+
+	headless.paste(eightBitFace,(xIndex - 1,yIndex - 1))
+
+	headless.save(newSpriteFile,'png')
+
+
+def makeFace(file):
 	#set up face detection
 	face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 	im = cv2.imread(file)
@@ -19,24 +67,26 @@ def makeFace(file):#main function
 		if(i[2] * i[3] > largest[2] * largest[3]):#[x,y,w,h]
 			largest = i
 
+
+
 	#get the face from the image 
 	face_only = extractFG(im,gray,largest[0],largest[1],largest[2],largest[3])
 
 	#write to a file before opening with Pillow
 	cv2.imwrite("face_only.jpg",face_only)
 
-	make8bit("face_only.jpg")
+	return "face_only.jpg"
 
 ####################################################################################
 #Extract face using the original image(open with OpenCV), 
 #a gray version of that face(also opened with OpenCV, and the coordinates of the face.
 #TODO: crop image closer to face.
 def extractFG(img,grayImg,x,y,w,h):
-	#increase size to fit whole head
-	x = x - int(w * 0.15)
-	y = y - int(h * 0.15)
-	w = w + int(w * 0.15)
-	h = h + int(h * 0.25)
+#	increase size to fit whole head
+#	x = x - int(w * 0.15)
+#	y = y - int(h * 0.15)
+#	w = w + int(w * 0.15)
+#	h = h + int(h * 0.25)
 	
 	rect = (x,y,w,h) #Region Of Interest
 
@@ -67,17 +117,24 @@ def extractFG(img,grayImg,x,y,w,h):
 	output = cv2.bitwise_and(img,img,mask=mask2)
 	output = output[y:y+h,x:x+w]#cropping needs improvment
 
- 	return output#return a picture with a black background and a face.
-################################################################################
 
+
+	return output#return a picture with a black background and a face.
+################################################################################
+#takes in an image (open with OpenCV) and crops the (0,0,0) edges off. 
+#returns 
+#def cropSides(image):
+
+################################################################################
 #converts image to an 8-bit color palette, makes the image into blocks that look
 #like a classic video game, then scales the image down.
 #TODO: finish scale issues
-def make8bit(filename):
-	convert = 30#blocks that make the image look 8-bit
-	resize = 7#devides the image size to be 1/7 of original
+def make8bit(filename,size):
+	convert = 5#blocks that make the image look 8-bit
 
 	im = Image.open(filename)
+
+	im = im.resize(size)
 
 	#im = im.filter(ImageFilter.MedianFilter(size=7))
 
@@ -85,6 +142,7 @@ def make8bit(filename):
 	eightbit = im.convert("P",palette=Image.ADAPTIVE,colors=256)
 
 	width, height = eightbit.size
+	print(width,height)
 	pixels = []#set up empty list to hold pixels
 	changes = eightbit.load()#access pixels 
 
@@ -101,9 +159,7 @@ def make8bit(filename):
 				for j in range(y,y+convert):
 					changes[i,j] = pixels[(convert ** 2) / 2]
 					#changes[i,j] = avg
-
-	#make image smaller(still needs to be improved)
-	new = eightbit.resize((eightbit.width/resize,eightbit.height/resize))
 	
-	new.show()#show for testing
-	new.save("eight_bit_face.png","PNG")#save image to a file before return
+	#new.show()#show for testing
+	#new.save("eight_bit_face.png","PNG")#save image to a file before return
+	return(eightbit)
