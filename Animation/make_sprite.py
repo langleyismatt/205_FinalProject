@@ -47,11 +47,26 @@ def makeSprite(faceFile, spriteFile, newSpriteFile):
 
 	#face = face.resize((w + 3,h + 2))
 
-	eightBitFace = eightBitFace.convert("RGB") 
+	eightBitFace = eightBitFace.convert("RGBA")
+
+	eightBitFace = fixEdges(eightBitFace) 
 
 	headless.paste(eightBitFace,(xIndex - 1,yIndex - 1))
 
 	headless.save(newSpriteFile,'png')
+
+
+def fixEdges(image):
+	width, height = image.size
+	changes = image.load()
+	for y in range(height):
+		for x in range(width):
+			pixel = image.getpixel((x,y))
+			if(pixel[0] < 8 and pixel[1] < 8 and pixel[2] < 8):
+				changes[x,y] = (255,255,255,0)
+	return image
+
+
 
 
 def makeFace(file):
@@ -142,7 +157,7 @@ def make8bit(filename,size):
 	eightbit = im.convert("P",palette=Image.ADAPTIVE,colors=256)
 
 	width, height = eightbit.size
-	print(width,height)
+	
 	pixels = []#set up empty list to hold pixels
 	changes = eightbit.load()#access pixels 
 
