@@ -35,20 +35,21 @@ def creditss():
       canvas.after(delay, update)
       delay += delta
 
-def getColor():
+def getColor(root):
    global pick
    global color
    color = askcolor()
    color = color[0]#get rgb version instead of hex 
    pick = 20
+   close(root)
 
-def bgImagePicker():
+def bgImagePicker(root):
    global pick
    name = askopenfilename(title = "Custom Background Image")
    image = Image.open(name)
    image.save("background.jpg",'png')
    pick = 10
-   print(name)
+   close(root)
    
 def filePicker():
    name = askopenfilename(title = "Choose a file")
@@ -66,21 +67,19 @@ def filePicker():
    w.pack()
    
    c = Button (root, text="Select Background Color", bg="lightblue",
-               command=getColor, activebackground="#B4EEB4")
+               command=lambda: getColor(root), activebackground="#B4EEB4")
    c.place(relx=0.15, rely=.32, anchor=CENTER)
 
    d = Button (root, text="Select Background Image", bg="lightblue",
-               command=bgImagePicker, activebackground="#B4EEB4")
+               command=lambda: bgImagePicker(root), activebackground="#B4EEB4")
    d.place(relx=.39, rely=.32, anchor=CENTER)
-      
-      #create sprites
+
+   #create sprites
    make_sprite.makeSprite(name,"Standing.png","Standing2.png") 
    make_sprite.makeSprite(name,"Down.png","Down2.png")  
    make_sprite.makeSprite(name,"JumpUp.png","JumpUp2.png") 
    make_sprite.makeSprite(name,"poke.png","poke2.png")
    
-
-
 
 def controls():
    root = Tk()
@@ -148,7 +147,7 @@ def main():
                 height="3", command=filePicker,
                 activebackground="#B4EEB4")
 
-   z = Button ( root, text = "Exit", bg="lightblue", cursor="X_cursor",
+   z = Button ( root, text = "Push-to-Start", bg="lightblue", cursor="X_cursor",
                 width="100",
                 height="3", command=lambda: close(root),
                 activebackground="#B4EEB4")
