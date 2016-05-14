@@ -1,3 +1,9 @@
+###########################################################################
+#CST 205 Project 3
+#Team 102: Coleman Johnston, Kailey Sarmiento, and Matthew Langley
+#GitHub Repo: https://github.com/langleyismatt/205_FinalProject.git 
+###########################################################################
+
 from Tkinter import *
 from tkFileDialog import *
 from tkColorChooser import *
@@ -5,8 +11,8 @@ import sys, pygame, time
 import make_sprite
 from PIL import Image
 
-pick = None #global variable so that everybody's can fit togeather
-color = None#global variable so that everybody's code can fit
+pick = None #global variable so that everybody's code can fit together
+color = None#global variable so that everybody's code can fit together
 
 def close(root):
    root.destroy()
