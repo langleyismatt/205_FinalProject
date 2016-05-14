@@ -110,8 +110,9 @@ def openInstructions():
              wrap="word", bg="lightblue", width="300", height="300", spacing2="7")
    w.insert(INSERT, "To use this program is simple.  To start, please click 'Pick-A-File'"
                      "and then select an image that you would like to process into"
-                     " an 8-bit character.  From there, sit back and let the magic "
-                     "happen!")
+                     " an 8-bit character.  From there, you have the option to select a "
+                     " background image or a background color.  After you have made your selection "
+                     "enjoy the game!")
    w.config(state=DISABLED)
    t = Button ( root, text="Close Window", bg="lightblue", cursor="x_cursor",
                 width="300", command=lambda: close(root),

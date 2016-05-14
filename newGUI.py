@@ -57,7 +57,7 @@ def filePicker():
    
    c = Button (root, text="Select Background Color", bg="lightblue",
                command=getColor, activebackground="#B4EEB4")
-   c.place(relx=0.15, rely=.32, anchor=CENTER)
+   c.place(relx=0.5, rely=.5, anchor=CENTER)
 
    d = Button (root, text="Select Background Image", bg="lightblue",
                command=bgImagePicker, activebackground="#B4EEB4")
